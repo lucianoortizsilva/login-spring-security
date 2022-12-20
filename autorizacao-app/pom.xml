@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.5</version>
+		<version>2.6.14</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>lucianoortizsilva.poc</groupId>
@@ -89,26 +89,7 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<!-- garante que todas as dependências transitivas do Spring Security usem os módulos Spring nessa versao-->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-framework-bom</artifactId>
-				<version>5.3.9</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<finalName>${project.artifactId}</finalName>
