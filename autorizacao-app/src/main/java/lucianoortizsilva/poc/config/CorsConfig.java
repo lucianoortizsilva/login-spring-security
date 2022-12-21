@@ -14,7 +14,7 @@ public class CorsConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		final CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
-		corsConfiguration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		corsConfiguration.setAllowedMethods(Arrays.asList("POST"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", corsConfiguration);
 		return source;
