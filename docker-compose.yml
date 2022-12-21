@@ -11,9 +11,9 @@ services:
       - .docker/db-mysql:/var/lib/mysql
     environment:
       MYSQL_DATABASE: autorizacao-db
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_ALLOW_EMPTY_PASSWORD: true
-      MYSQL_RANDOM_ROOT_PASSWORD: true
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ALLOW_EMPTY_PASSWORD: false
+      MYSQL_RANDOM_ROOT_PASSWORD: false
     networks:
       - network
       
@@ -21,4 +21,4 @@ volumes:
   .docker:
 
 networks:
-  network: { }
+  network: {}

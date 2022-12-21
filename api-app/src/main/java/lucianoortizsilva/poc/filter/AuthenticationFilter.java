@@ -71,8 +71,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 			} else {
 				final UsernamePasswordAuthenticationToken usuarioAutenticado = this.userService.getUsernamePasswordAuthenticationToken(authorization);
 				if(usuarioAutenticado == null) {
-					SecurityContextHolder.getContext().setAuthentication(null);
-					filterChain.doFilter(request, response);
+					GeraErroNaoAutorizado geraErroNaoAutorizado = new GeraErroNaoAutorizado(response);
+					geraErroNaoAutorizado.comMensagem("Não Autorizado");
 				} else {
 					SecurityContextHolder.getContext().setAuthentication(usuarioAutenticado);
 					filterChain.doFilter(request, response);
