@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  
+  service-mysql-db:
+    container_name: container-mysqldb
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    volumes:
+      - .docker/db-mysql:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: autorizacao-db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_RANDOM_ROOT_PASSWORD: true
+    networks:
+      - network
+      
+volumes:
+  .docker:
+
+networks:
+  network: { }

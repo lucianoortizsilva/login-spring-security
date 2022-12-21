@@ -17,9 +17,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import lucianoortizsilva.poc.token.TokenJwt;
-import lucianoortizsilva.poc.user.UserService;
-
 /**
  * 
  * https://auth0.com/blog/implementing-jwt-authentication-on-spring-boot/
@@ -35,12 +32,6 @@ public class WebSecurityConfigurerCustom extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private Environment env;
 
-	@Autowired
-	private TokenJwt tokenJwt;
-
-	@Autowired
-	private UserService userService;
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		permitirVisualizarTelaBancoH2(http);
