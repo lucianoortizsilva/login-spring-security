@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.usuario;
+package lucianoortizsilva.poc.user;
 
 import lombok.Getter;
 

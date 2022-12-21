@@ -17,8 +17,9 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lucianoortizsilva.poc.login.LoginFilter;
+import lucianoortizsilva.poc.outh.OauthAuthorizationService;
 import lucianoortizsilva.poc.token.TokenJwt;
-import lucianoortizsilva.poc.usuario.UserService;
+import lucianoortizsilva.poc.user.UserService;
 
 /**
  * 
@@ -38,13 +39,16 @@ public class WebSecurityConfigurerCustom extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private OauthAuthorizationService oauthAuthorizationService;
+	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable();
 		httpSecurity.headers().frameOptions().sameOrigin();
-		httpSecurity.authorizeHttpRequests().anyRequest().permitAll();
+		httpSecurity.authorizeHttpRequests().antMatchers("/login").permitAll();
 		httpSecurity.authorizeRequests().antMatchers("/h2-console/**").permitAll();
-		httpSecurity.addFilter(new LoginFilter(authenticationManager(), this.userService, this.tokenJwt));
+		httpSecurity.addFilter(new LoginFilter(authenticationManager(), this.userService, this.tokenJwt, this.oauthAuthorizationService));
 		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 

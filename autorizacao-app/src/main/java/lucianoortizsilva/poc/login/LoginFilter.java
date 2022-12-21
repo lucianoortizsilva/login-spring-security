@@ -20,23 +20,27 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import lombok.extern.slf4j.Slf4j;
 import lucianoortizsilva.poc.error.GeraErroBadRequest;
 import lucianoortizsilva.poc.error.GeraErroNaoAutorizado;
+import lucianoortizsilva.poc.outh.OauthAuthorization;
+import lucianoortizsilva.poc.outh.OauthAuthorizationService;
 import lucianoortizsilva.poc.token.TokenJwt;
-import lucianoortizsilva.poc.usuario.User;
-import lucianoortizsilva.poc.usuario.UserDTO;
-import lucianoortizsilva.poc.usuario.UserService;
+import lucianoortizsilva.poc.user.User;
+import lucianoortizsilva.poc.user.UserDTO;
+import lucianoortizsilva.poc.user.UserService;
 import lucianoortizsilva.poc.util.JsonUtil;
 
 @Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
+	private OauthAuthorizationService oauthAuthorizationService;
 	private AuthenticationManager authenticationManager;
-
 	private TokenJwt tokenJwt;
-
 	private UserService userService;
-
-	public LoginFilter(final AuthenticationManager authenticationManager, final UserService userService, final TokenJwt tokenJwt) {
+	
+	
+	
+	public LoginFilter(final AuthenticationManager authenticationManager, final UserService userService, final TokenJwt tokenJwt, final OauthAuthorizationService oauthAuthorizationService) {
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
+		this.oauthAuthorizationService = oauthAuthorizationService;
 		this.authenticationManager = authenticationManager;
 		this.userService = userService;
 		this.tokenJwt = tokenJwt;
@@ -50,7 +54,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 			final UserDTO user = (UserDTO) JsonUtil.convertToObject(req.getInputStream(), UserDTO.class);
 			log.info("Solicitando token para usuario com username: {}", user.getUsername());
 			final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = userService.getUsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
-			return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+			return authenticationManager.authenticate(usernamePasswordAuthenticationToken);//valida a senha em AbstractUserDetailsAuthenticationProvider
 		} catch (final Exception e) {
 			log.error(e.getMessage(), e);
 			final GeraErroBadRequest geraErroBadRequest = new GeraErroBadRequest(res);
@@ -68,7 +72,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		final List<String> permissions = userService.getPermissions(user.getRoles());
 		final List<GrantedAuthority> authorities = userService.getGrantedAuthorities(permissions);
 		final String token = this.tokenJwt.generateToken(username, user.getFirstName(), user.getLastName(), authorities);
-		response.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+		final String authorization = "Bearer " + token;
+		this.oauthAuthorizationService.save(new OauthAuthorization(authorization));
+		response.setHeader(HttpHeaders.AUTHORIZATION, authorization);
 		response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
 		log.info("Authorization: Bearer {}", token);
 	}

@@ -11,14 +11,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import lucianoortizsilva.poc.usuario.Permission;
-import lucianoortizsilva.poc.usuario.PermissionEnum;
-import lucianoortizsilva.poc.usuario.PermissionRepository;
-import lucianoortizsilva.poc.usuario.Role;
-import lucianoortizsilva.poc.usuario.RoleEnum;
-import lucianoortizsilva.poc.usuario.RoleRepository;
-import lucianoortizsilva.poc.usuario.User;
-import lucianoortizsilva.poc.usuario.UserRepository;
+import lucianoortizsilva.poc.user.Permission;
+import lucianoortizsilva.poc.user.PermissionEnum;
+import lucianoortizsilva.poc.user.PermissionRepository;
+import lucianoortizsilva.poc.user.Role;
+import lucianoortizsilva.poc.user.RoleEnum;
+import lucianoortizsilva.poc.user.RoleRepository;
+import lucianoortizsilva.poc.user.User;
+import lucianoortizsilva.poc.user.UserRepository;
 
 @Component
 public class LoadDatabaseDefault implements ApplicationListener<ContextRefreshedEvent> {
