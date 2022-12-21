@@ -35,7 +35,7 @@ public class Controller {
 	
 	
 	@PutMapping(value = "/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_FUNCIONARIO')")
+	@PreAuthorize("hasAuthority('ROLE_CHEFAO') or hasAuthority('ROLE_PERSONAGENS')")
 	public ResponseEntity<Void> update(@RequestBody @Valid @P("dto") final LivroDTO dto, @PathVariable(value = "id", required = true) final Long id) {
 		dto.setId(id);
 		return ResponseEntity.noContent().build();
@@ -44,7 +44,7 @@ public class Controller {
 	
 	
 	@DeleteMapping(value = "/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	@PreAuthorize("hasAuthority('ROLE_CHEFAO')")
 	public ResponseEntity<Void> delete(@PathVariable(value = "id", required = true) final Long id) {
 		return ResponseEntity.noContent().build();
 	}
@@ -52,7 +52,7 @@ public class Controller {
 	
 	
 	@GetMapping(value = "/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_FUNCIONARIO') or hasAuthority('ROLE_SUPORTE')")
+	@PreAuthorize("hasAuthority('ROLE_CHEFAO') or hasAuthority('ROLE_PERSONAGENS') or hasAuthority('ROLE_OUTROS')")
 	public ResponseEntity<LivroDTO> findById(@PathVariable(value = "id", required = true) final Long id) {
 		LivroDTO dto = new LivroDTO(id, null, null, null, null);
 		return ResponseEntity.ok().body(dto);

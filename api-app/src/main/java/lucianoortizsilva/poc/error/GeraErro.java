@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.filter;
+package lucianoortizsilva.poc.error;
 
 import static java.util.Objects.nonNull;
 

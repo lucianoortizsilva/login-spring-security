@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.filter;
+package lucianoortizsilva.poc.error;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 

@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.jwt;
+package lucianoortizsilva.poc.token;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +21,8 @@ import lucianoortizsilva.poc.util.JsonUtil;
 @Component
 public class TokenJwt {
 
-	@Value("${app.jwt.secret}")
-	private String secret;
-
-	@Value("${app.jwt.expiration}")
-	private Long expiration;
-	
+	private String secret = "W%@VBrlgz#x@wfCwdk%2Gww^svc$AFBYskQ*H0m0ih@&igdNo*";
+	private Long expiration = 120000L;
 	
 	
 	public String generateToken(final String username, final String firstName, final String lastName, final List<GrantedAuthority> grantedAuthority) {

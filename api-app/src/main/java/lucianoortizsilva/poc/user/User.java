@@ -10,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lucianoortizsilva.poc.jwt.Role;
-import lucianoortizsilva.poc.jwt.RoleEnum;
 
 @Getter
 @ToString

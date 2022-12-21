@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import lucianoortizsilva.poc.jwt.TokenJwtInterceptor;
+import lucianoortizsilva.poc.token.TokenJwtInterceptor;
 
 @Configuration
 public class WebMvcConfigurerCustom implements WebMvcConfigurer {

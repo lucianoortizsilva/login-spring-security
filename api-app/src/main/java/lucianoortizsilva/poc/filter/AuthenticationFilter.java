@@ -21,7 +21,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
-import lucianoortizsilva.poc.jwt.TokenJwtException;
+import lucianoortizsilva.poc.error.GeraErroInesperado;
+import lucianoortizsilva.poc.error.GeraErroNaoAutorizado;
+import lucianoortizsilva.poc.error.GeraErroRequisicaoInvalida;
+import lucianoortizsilva.poc.error.GeraErroSemPermissao;
+import lucianoortizsilva.poc.token.TokenJwtException;
 import lucianoortizsilva.poc.user.UserService;
 
 /**
@@ -66,8 +70,13 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 				geraErroRequisicaoInvalida.comMensagem("Authorization inválida");
 			} else {
 				final UsernamePasswordAuthenticationToken usuarioAutenticado = this.userService.getUsernamePasswordAuthenticationToken(authorization);
-				SecurityContextHolder.getContext().setAuthentication(usuarioAutenticado);
-				filterChain.doFilter(request, response);
+				if(usuarioAutenticado == null) {
+					SecurityContextHolder.getContext().setAuthentication(null);
+					filterChain.doFilter(request, response);
+				} else {
+					SecurityContextHolder.getContext().setAuthentication(usuarioAutenticado);
+					filterChain.doFilter(request, response);
+				}
 			}
 		} catch (final UsernameNotFoundException e) {
 			log.error(e.getMessage(), e);

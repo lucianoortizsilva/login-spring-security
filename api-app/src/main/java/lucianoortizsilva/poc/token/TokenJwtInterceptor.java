@@ -1,21 +1,25 @@
-package lucianoortizsilva.poc.jwt;
+package lucianoortizsilva.poc.token;
 
-import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+//import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpServletRequest;
+//import javax.servlet.http.HttpServletResponse;
+//import org.springframework.http.HttpHeaders;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class TokenJwtInterceptor implements HandlerInterceptor {
 
-	@Autowired
-	private TokenJwt tokenJwt;
+	//@Autowired
+	//private TokenJwt tokenJwt;
 
+	/**
+	 * 
+	 * Refresh token para cada request
+	 * 
 	@Override
 	public boolean preHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler) throws Exception {
 		final String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -27,5 +31,6 @@ public class TokenJwtInterceptor implements HandlerInterceptor {
 		}
 		return true;
 	}
+	*/
 
 }

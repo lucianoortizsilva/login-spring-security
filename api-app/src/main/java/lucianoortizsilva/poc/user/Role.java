@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.jwt;
+package lucianoortizsilva.poc.user;
 
 import java.io.Serializable;
 import java.util.List;

@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.jwt;
+package lucianoortizsilva.poc.token;
 
 import java.util.List;
 
