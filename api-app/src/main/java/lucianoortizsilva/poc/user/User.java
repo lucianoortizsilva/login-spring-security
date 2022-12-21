@@ -1,16 +1,7 @@
-package lucianoortizsilva.poc.usuario;
+package lucianoortizsilva.poc.user;
 
 import java.util.Collection;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,38 +10,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lucianoortizsilva.poc.jwt.Role;
+import lucianoortizsilva.poc.jwt.RoleEnum;
 
 @Getter
-@Entity
 @ToString
 @NoArgsConstructor
-public class Usuario implements UserDetails {
+public class User implements UserDetails {
 
 	private static final long serialVersionUID = -804917945275782212L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@Column(name = "username", unique = true, nullable = false)
 	private String username;
-
-	@Column(name = "firstName", nullable = false)
 	private String firstName;
-
-	@Column(name = "lastName", nullable = false)
 	private String lastName;
-
-	@Column(name = "password", nullable = false)
 	private String password;
-
-	@Column(name = "enabled", nullable = false)
 	private Boolean enabled;
-
-	@ManyToMany(fetch = FetchType.EAGER)
-	private List<Perfil> roles;
-
-	@Transient
+	private List<Role> roles;
 	private Collection<? extends GrantedAuthority> authorities;
 
 	private boolean accountNonExpired = true;
@@ -59,7 +35,8 @@ public class Usuario implements UserDetails {
 
 	private boolean credentialsNonExpired = true;
 
-	public Usuario(final String username, final String firstName, final String lastName, final String password, final Boolean enabled, final List<Perfil> roles) {
+	public User(final String username, final String firstName, final String lastName, final String password,
+			final Boolean enabled, final List<Role> roles) {
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -68,7 +45,7 @@ public class Usuario implements UserDetails {
 		this.roles = roles;
 	}
 
-	public boolean hasRole(final PerfilEnum roleEnum) {
+	public boolean hasRole(final RoleEnum roleEnum) {
 		return this.getAuthorities().contains(new SimpleGrantedAuthority(roleEnum.name()));
 	}
 

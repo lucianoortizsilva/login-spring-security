@@ -18,7 +18,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Permissao implements Serializable {
+public class Permission implements Serializable {
 
 	private static final long serialVersionUID = -2865488382272483179L;
 
@@ -29,7 +29,7 @@ public class Permissao implements Serializable {
 	@Column(name = "name")
 	private String name;
 
-	public Permissao(final String name) {
+	public Permission(final String name) {
 		this.name = name;
 	}
 

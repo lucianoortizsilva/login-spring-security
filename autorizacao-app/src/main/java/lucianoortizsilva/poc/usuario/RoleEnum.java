@@ -3,8 +3,12 @@ package lucianoortizsilva.poc.usuario;
 import lombok.Getter;
 
 @Getter
-public enum PermissaoEnum {
+public enum RoleEnum {
 
-	CREATE, READ, UPDATE, DELETE;
+	ROLE_CHEFAO,
+
+	ROLE_PERSONAGENS,
+
+	ROLE_OUTROS;
 
 }

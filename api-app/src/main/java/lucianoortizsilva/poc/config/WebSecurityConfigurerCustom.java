@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,9 +17,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import lucianoortizsilva.poc.login.LoginFilter;
-import lucianoortizsilva.poc.token.TokenJwt;
-import lucianoortizsilva.poc.usuario.UserService;
+import lucianoortizsilva.poc.jwt.TokenJwt;
+import lucianoortizsilva.poc.user.UserService;
 
 /**
  * 
@@ -33,19 +33,25 @@ import lucianoortizsilva.poc.usuario.UserService;
 public class WebSecurityConfigurerCustom extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+	private Environment env;
+
+	@Autowired
 	private TokenJwt tokenJwt;
 
 	@Autowired
 	private UserService userService;
-
+	
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().disable();
-		httpSecurity.headers().frameOptions().sameOrigin();
-		httpSecurity.authorizeHttpRequests().anyRequest().permitAll();
-		httpSecurity.authorizeRequests().antMatchers("/h2-console/**").permitAll();
-		httpSecurity.addFilter(new LoginFilter(authenticationManager(), this.userService, this.tokenJwt));
-		httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	protected void configure(HttpSecurity http) throws Exception {
+		permitirVisualizarTelaBancoH2(http);
+		http.cors().and().csrf().disable();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	}
+
+	private void permitirVisualizarTelaBancoH2(HttpSecurity http) throws Exception {
+		if (Arrays.asList(this.env.getActiveProfiles()).contains("test")) {
+			http.headers().frameOptions().disable();
+		}
 	}
 
 	@Bean

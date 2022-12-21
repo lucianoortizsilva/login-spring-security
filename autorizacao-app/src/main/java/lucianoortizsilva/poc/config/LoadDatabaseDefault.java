@@ -11,26 +11,26 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import lucianoortizsilva.poc.usuario.Permissao;
-import lucianoortizsilva.poc.usuario.PermissaoEnum;
-import lucianoortizsilva.poc.usuario.PermissaoRepository;
-import lucianoortizsilva.poc.usuario.Perfil;
-import lucianoortizsilva.poc.usuario.PerfilEnum;
-import lucianoortizsilva.poc.usuario.PerfilRepository;
-import lucianoortizsilva.poc.usuario.Usuario;
-import lucianoortizsilva.poc.usuario.UsuarioRepository;
+import lucianoortizsilva.poc.usuario.Permission;
+import lucianoortizsilva.poc.usuario.PermissionEnum;
+import lucianoortizsilva.poc.usuario.PermissionRepository;
+import lucianoortizsilva.poc.usuario.Role;
+import lucianoortizsilva.poc.usuario.RoleEnum;
+import lucianoortizsilva.poc.usuario.RoleRepository;
+import lucianoortizsilva.poc.usuario.User;
+import lucianoortizsilva.poc.usuario.UserRepository;
 
 @Component
 public class LoadDatabaseDefault implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
-	private UsuarioRepository userRepository;
+	private UserRepository userRepository;
 
 	@Autowired
-	private PerfilRepository roleRepository;
+	private RoleRepository roleRepository;
 
 	@Autowired
-	private PermissaoRepository permissionRepository;
+	private PermissionRepository permissionRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -39,47 +39,47 @@ public class LoadDatabaseDefault implements ApplicationListener<ContextRefreshed
 	@Transactional
 	public void onApplicationEvent(final ContextRefreshedEvent event) {
 
-		final Permissao create = createPermissionIfNotFound(PermissaoEnum.CREATE.name());
-		final Permissao read = createPermissionIfNotFound(PermissaoEnum.READ.name());
-		final Permissao update = createPermissionIfNotFound(PermissaoEnum.UPDATE.name());
-		final Permissao delete = createPermissionIfNotFound(PermissaoEnum.DELETE.name());
+		final Permission create = createPermissionIfNotFound(PermissionEnum.CREATE.name());
+		final Permission read = createPermissionIfNotFound(PermissionEnum.READ.name());
+		final Permission update = createPermissionIfNotFound(PermissionEnum.UPDATE.name());
+		final Permission delete = createPermissionIfNotFound(PermissionEnum.DELETE.name());
 
-		final Perfil perfilChefao = createRoleIfNotFound(PerfilEnum.ROLE_CHEFAO, Arrays.asList(create, read, update, delete));
-		final Perfil perfilPersonagens = createRoleIfNotFound(PerfilEnum.ROLE_PERSONAGENS, Arrays.asList(read, update));
-		final Perfil perfilOutros = createRoleIfNotFound(PerfilEnum.ROLE_OUTROS, Arrays.asList(read));
+		final Role roleChefao = createRoleIfNotFound(RoleEnum.ROLE_CHEFAO, Arrays.asList(create, read, update, delete));
+		final Role rolePersonagens = createRoleIfNotFound(RoleEnum.ROLE_PERSONAGENS, Arrays.asList(read, update));
+		final Role roleOutros = createRoleIfNotFound(RoleEnum.ROLE_OUTROS, Arrays.asList(read));
 
-		createUserIfNotFound("bowser@supermario.com", "Big Boss", "Bowser", perfilChefao);
-		createUserIfNotFound("funcionario@supermario.com", "Mariana", "Silva", perfilPersonagens);
-		createUserIfNotFound("suporte@supermario.com", "Vanessa", "Silva", perfilOutros);
+		createUserIfNotFound("bowser@supermario.com", "Big Boss", "Bowser", roleChefao);
+		createUserIfNotFound("mario@supermario.com", "Super", "Mario", rolePersonagens);
+		createUserIfNotFound("fantasma@supermario.com", "Fantasma", "", roleOutros);
 
 	}
 
 	@Transactional
-	private Permissao createPermissionIfNotFound(final String name) {
-		Optional<Permissao> permission = permissionRepository.findByName(name);
+	private Permission createPermissionIfNotFound(final String name) {
+		Optional<Permission> permission = permissionRepository.findByName(name);
 		if (permission.isEmpty()) {
-			return permissionRepository.save(new Permissao(name));
+			return permissionRepository.save(new Permission(name));
 		} else {
 			return null;
 		}
 	}
 
 	@Transactional
-	private Perfil createRoleIfNotFound(final PerfilEnum roleEnum, final List<Permissao> permissions) {
-		Optional<Perfil> role = roleRepository.findByName(roleEnum.name());
+	private Role createRoleIfNotFound(final RoleEnum roleEnum, final List<Permission> permissions) {
+		Optional<Role> role = roleRepository.findByName(roleEnum.name());
 		if (role.isEmpty()) {
-			return roleRepository.save(new Perfil(roleEnum.name(), permissions));
+			return roleRepository.save(new Role(roleEnum.name(), permissions));
 		} else {
 			return null;
 		}
 	}
 
 	@Transactional
-	private void createUserIfNotFound(final String username, final String firstName, final String lastName, final Perfil role) {
-		Optional<Usuario> user = userRepository.findByUsername(username);
+	private void createUserIfNotFound(final String username, final String firstName, final String lastName, final Role role) {
+		Optional<User> user = userRepository.findByUsername(username);
 		if (user.isEmpty()) {
 			final String password = bCryptPasswordEncoder.encode("12345");
-			userRepository.save(new Usuario(username, firstName, lastName, password, true, Arrays.asList(role)));
+			userRepository.save(new User(username, firstName, lastName, password, true, Arrays.asList(role)));
 		}
 	}
 

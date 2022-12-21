@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PerfilRepository extends JpaRepository<Perfil, Long> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
-	Optional<Perfil> findByName(String name);
+	Optional<Role> findByName(String name);
 
 }

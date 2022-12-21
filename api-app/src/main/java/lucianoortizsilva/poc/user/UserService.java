@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.usuario;
+package lucianoortizsilva.poc.user;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,28 +12,27 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import lucianoortizsilva.poc.token.Payload;
-import lucianoortizsilva.poc.token.TokenJwt;
+import lucianoortizsilva.poc.jwt.Payload;
+import lucianoortizsilva.poc.jwt.Permission;
+import lucianoortizsilva.poc.jwt.Role;
+import lucianoortizsilva.poc.jwt.TokenJwt;
 
 @Service
-public class UsuarioService implements UserDetailsService {
-
-	@Autowired
-	private UsuarioRepository userRepository;
+public class UserService implements UserDetailsService {
 
 	@Autowired
 	private TokenJwt tokenJwt;
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuário não existe!"));
+		return null;
 	}
 
 	public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(final String authorization) {
-		final Payload payload = this.tokenJwt.getPayload(authorization);
-		final Usuario user = (Usuario) this.loadUserByUsername(payload.getLogin());
-		final List<String> permissions = getPermissions(user.getRoles());
+		final Payload payload = (Payload) this.tokenJwt.getPayload(authorization);
+		final List<String> permissions = payload.getAuthorities();
 		final List<GrantedAuthority> authorities = getGrantedAuthorities(permissions);
+		final User user = new User(payload.getLogin(), payload.getFirstName(), payload.getLastName(), null, Boolean.TRUE, null);
 		return new UsernamePasswordAuthenticationToken(user, null, authorities);
 	}
 
@@ -41,14 +40,15 @@ public class UsuarioService implements UserDetailsService {
 		return new UsernamePasswordAuthenticationToken(username, password);
 	}
 
-	public List<String> getPermissions(final List<Perfil> roles) {
+	public List<String> getPermissions(final List<Role> roles) {
 		final List<String> permissionsAll = new ArrayList<>();
-		final List<Permissao> permissions = new ArrayList<>();
-		for (final Perfil role : roles) {
+		final List<Permission> permissions = new ArrayList<>();
+
+		for (final Role role : roles) {
 			permissionsAll.add(role.getName());
 			permissions.addAll(role.getPermissions());
 		}
-		for (final Permissao permission : permissions) {
+		for (final Permission permission : permissions) {
 			permissionsAll.add(permission.getName());
 		}
 		return permissionsAll;

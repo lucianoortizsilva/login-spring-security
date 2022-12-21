@@ -21,9 +21,9 @@ import lombok.extern.slf4j.Slf4j;
 import lucianoortizsilva.poc.error.GeraErroBadRequest;
 import lucianoortizsilva.poc.error.GeraErroNaoAutorizado;
 import lucianoortizsilva.poc.token.TokenJwt;
-import lucianoortizsilva.poc.usuario.Usuario;
-import lucianoortizsilva.poc.usuario.UsuarioDTO;
-import lucianoortizsilva.poc.usuario.UsuarioService;
+import lucianoortizsilva.poc.usuario.User;
+import lucianoortizsilva.poc.usuario.UserDTO;
+import lucianoortizsilva.poc.usuario.UserService;
 import lucianoortizsilva.poc.util.JsonUtil;
 
 @Slf4j
@@ -33,9 +33,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
 	private TokenJwt tokenJwt;
 
-	private UsuarioService userService;
+	private UserService userService;
 
-	public LoginFilter(final AuthenticationManager authenticationManager, final UsuarioService userService, final TokenJwt tokenJwt) {
+	public LoginFilter(final AuthenticationManager authenticationManager, final UserService userService, final TokenJwt tokenJwt) {
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.authenticationManager = authenticationManager;
 		this.userService = userService;
@@ -47,7 +47,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 	@Override
 	public Authentication attemptAuthentication(final HttpServletRequest req, final HttpServletResponse res) throws AuthenticationException {
 		try {
-			final UsuarioDTO user = (UsuarioDTO) JsonUtil.convertToObject(req.getInputStream(), UsuarioDTO.class);
+			final UserDTO user = (UserDTO) JsonUtil.convertToObject(req.getInputStream(), UserDTO.class);
 			log.info("Solicitando token para usuario com username: {}", user.getUsername());
 			final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = userService.getUsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 			return authenticationManager.authenticate(usernamePasswordAuthenticationToken);
@@ -63,8 +63,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 	
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-		final String username = ((Usuario) authentication.getPrincipal()).getUsername();
-		final Usuario user = (Usuario) this.userService.loadUserByUsername(username);
+		final String username = ((User) authentication.getPrincipal()).getUsername();
+		final User user = (User) this.userService.loadUserByUsername(username);
 		final List<String> permissions = userService.getPermissions(user.getRoles());
 		final List<GrantedAuthority> authorities = userService.getGrantedAuthorities(permissions);
 		final String token = this.tokenJwt.generateToken(username, user.getFirstName(), user.getLastName(), authorities);

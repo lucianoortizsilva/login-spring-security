@@ -22,7 +22,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @NoArgsConstructor
-public class Perfil implements Serializable {
+public class Role implements Serializable {
 
 	private static final long serialVersionUID = -3547675638286920172L;
 
@@ -35,13 +35,13 @@ public class Perfil implements Serializable {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "roles_permissions", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "permission_id", referencedColumnName = "id"))
-	private Collection<Permissao> permissions;
+	private Collection<Permission> permissions;
 
-	public Perfil(final String name) {
+	public Role(final String name) {
 		this.name = name;
 	}
 
-	public Perfil(final String name, final List<Permissao> permissions) {
+	public Role(final String name, final List<Permission> permissions) {
 		this.name = name;
 		this.permissions = permissions;
 	}
