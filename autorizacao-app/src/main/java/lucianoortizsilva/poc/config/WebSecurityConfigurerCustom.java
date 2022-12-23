@@ -18,8 +18,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lucianoortizsilva.poc.login.LoginFilter;
 import lucianoortizsilva.poc.outh.OauthAuthorizationService;
-import lucianoortizsilva.poc.token.TokenJwt;
 import lucianoortizsilva.poc.user.UserService;
+import lucianoortizsilva.poc.user.token.TokenJwt;
 
 /**
  * 

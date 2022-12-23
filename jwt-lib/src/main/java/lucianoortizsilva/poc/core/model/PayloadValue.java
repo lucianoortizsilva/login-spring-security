@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.token;
+package lucianoortizsilva.poc.core.model;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Payload {
+public class PayloadValue {
 
 	@SerializedName(value = "dhExpiration")
 	private Long expiration;

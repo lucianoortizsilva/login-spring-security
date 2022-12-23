@@ -12,8 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import lucianoortizsilva.poc.token.Payload;
-import lucianoortizsilva.poc.token.TokenJwt;
+import lucianoortizsilva.poc.user.token.Payload;
+import lucianoortizsilva.poc.user.token.TokenJwt;
 
 @Service
 public class UserService implements UserDetailsService {

@@ -1,7 +1,10 @@
 package lucianoortizsilva.poc.login;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -22,10 +25,10 @@ import lucianoortizsilva.poc.error.GeraErroBadRequest;
 import lucianoortizsilva.poc.error.GeraErroNaoAutorizado;
 import lucianoortizsilva.poc.outh.OauthAuthorization;
 import lucianoortizsilva.poc.outh.OauthAuthorizationService;
-import lucianoortizsilva.poc.token.TokenJwt;
 import lucianoortizsilva.poc.user.User;
 import lucianoortizsilva.poc.user.UserDTO;
 import lucianoortizsilva.poc.user.UserService;
+import lucianoortizsilva.poc.user.token.TokenJwt;
 import lucianoortizsilva.poc.util.JsonUtil;
 
 @Slf4j
@@ -71,7 +74,16 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		final User user = (User) this.userService.loadUserByUsername(username);
 		final List<String> permissions = userService.getPermissions(user.getRoles());
 		final List<GrantedAuthority> authorities = userService.getGrantedAuthorities(permissions);
-		final String token = this.tokenJwt.generateToken(username, user.getFirstName(), user.getLastName(), authorities);
+		final List<String> authoritiesText = authorities.stream().map(granted -> granted.getAuthority()).collect(Collectors.toList());
+		final String perfis = authoritiesText.stream().filter(authority-> authority.startsWith("ROLE")).map(role-> role.split("_")).map(role-> role[1]).reduce("", (x,y)-> (x + y));
+		
+		final Map<String, Object> infoToken = new HashMap<String, Object>();
+		infoToken.put("username", username);
+		infoToken.put("firstName", user.getFirstName());
+		infoToken.put("lastName", user.getLastName());
+		infoToken.put("perfis", perfis);
+		
+		final String token = this.tokenJwt.gerar(infoToken);
 		final String authorization = "Bearer " + token;
 		this.oauthAuthorizationService.save(new OauthAuthorization(authorization));
 		response.setHeader(HttpHeaders.AUTHORIZATION, authorization);

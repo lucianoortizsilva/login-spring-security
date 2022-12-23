@@ -1,6 +1,6 @@
-package lucianoortizsilva.poc.token;
+package lucianoortizsilva.poc.core;
 
-public class TokenJwtException extends RuntimeException {
+class TokenJwtException extends RuntimeException {
 
 	static final long serialVersionUID = -518567546596988373L;
 
