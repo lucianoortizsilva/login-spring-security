@@ -12,7 +12,7 @@ import lucianoortizsilva.poc.core.model.PayloadProperty;
 import lucianoortizsilva.poc.core.model.PayloadValue;
 import lucianoortizsilva.poc.util.JsonUtil;
 
-public class Payload implements ConfigurationToken {
+public class PayloadService implements ConfigurationToken {
 
 	public Map<PayloadProperty, Object> getValue(final String authorization) {
 		final Map<PayloadProperty, Object> map = getUsuarioFrom(authorization);

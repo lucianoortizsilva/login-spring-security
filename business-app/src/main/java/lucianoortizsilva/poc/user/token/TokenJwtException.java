@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.token;
+package lucianoortizsilva.poc.user.token;
 
 public class TokenJwtException extends RuntimeException {
 

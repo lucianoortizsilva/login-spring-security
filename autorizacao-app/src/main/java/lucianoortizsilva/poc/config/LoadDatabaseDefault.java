@@ -44,13 +44,13 @@ public class LoadDatabaseDefault implements ApplicationListener<ContextRefreshed
 		final Permission update = createPermissionIfNotFound(PermissionEnum.UPDATE.name());
 		final Permission delete = createPermissionIfNotFound(PermissionEnum.DELETE.name());
 
-		final Role roleChefao = createRoleIfNotFound(RoleEnum.ROLE_CHEFAO, Arrays.asList(create, read, update, delete));
-		final Role rolePersonagens = createRoleIfNotFound(RoleEnum.ROLE_PERSONAGENS, Arrays.asList(read, update));
+		final Role roleAdmin = createRoleIfNotFound(RoleEnum.ROLE_ADMIN, Arrays.asList(create, read, update, delete));
+		final Role roleAtendente = createRoleIfNotFound(RoleEnum.ROLE_ATENDENTE, Arrays.asList(read, update));
 		final Role roleOutros = createRoleIfNotFound(RoleEnum.ROLE_OUTROS, Arrays.asList(read));
 
-		createUserIfNotFound("bowser@supermario.com", "Big Boss", "Bowser", roleChefao);
-		createUserIfNotFound("mario@supermario.com", "Super", "Mario", rolePersonagens);
-		createUserIfNotFound("fantasma@supermario.com", "Fantasma", "", roleOutros);
+		createUserIfNotFound("luciano@fake.com", "Luciano", "Ortiz", roleAdmin);
+		createUserIfNotFound("mariana@fake.com", "Mariana", "Ortiz", roleAtendente);
+		createUserIfNotFound("rafaela@fake.com", "Rafaela", "Ortiz", roleOutros);
 
 	}
 

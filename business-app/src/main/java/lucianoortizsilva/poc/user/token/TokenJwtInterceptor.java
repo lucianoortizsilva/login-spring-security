@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.token;
+package lucianoortizsilva.poc.user.token;
 
 //import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 

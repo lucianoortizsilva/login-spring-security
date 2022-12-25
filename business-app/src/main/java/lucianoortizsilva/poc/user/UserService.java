@@ -13,10 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import lucianoortizsilva.poc.core.model.PayloadValue;
 import lucianoortizsilva.poc.outh.OauthAuthorization;
 import lucianoortizsilva.poc.outh.OauthAuthorizationService;
-import lucianoortizsilva.poc.token.Payload;
-import lucianoortizsilva.poc.token.TokenJwt;
+import lucianoortizsilva.poc.user.token.TokenJwt;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
 	public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(final String authorization) {
 		final Optional<OauthAuthorization> optional = oauthAuthorizationService.findByAuthorization(authorization);
 		if (optional.isPresent()) {
-			final Payload payload = (Payload) this.tokenJwt.getPayload(authorization);
+			final PayloadValue payload = (PayloadValue) this.tokenJwt.getPayload(authorization);
 			final List<String> permissions = payload.getAuthorities();
 			final List<GrantedAuthority> authorities = getGrantedAuthorities(permissions);
 			final User user = new User(payload.getLogin(), payload.getFirstName(), payload.getLastName(), null, Boolean.TRUE, null);

@@ -25,8 +25,8 @@ import lucianoortizsilva.poc.error.GeraErroInesperado;
 import lucianoortizsilva.poc.error.GeraErroNaoAutorizado;
 import lucianoortizsilva.poc.error.GeraErroRequisicaoInvalida;
 import lucianoortizsilva.poc.error.GeraErroSemPermissao;
-import lucianoortizsilva.poc.token.TokenJwtException;
 import lucianoortizsilva.poc.user.UserService;
+import lucianoortizsilva.poc.user.token.TokenJwtException;
 
 /**
  * 

@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public enum RoleEnum {
 
-	ROLE_CHEFAO,
+	ROLE_ADMIN,
 
-	ROLE_PERSONAGENS,
+	ROLE_ATENDENTE,
 
 	ROLE_OUTROS;
 

@@ -82,6 +82,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		infoToken.put("firstName", user.getFirstName());
 		infoToken.put("lastName", user.getLastName());
 		infoToken.put("perfis", perfis);
+		infoToken.put("authorities", authoritiesText);
 		
 		final String token = this.tokenJwt.gerar(infoToken);
 		final String authorization = "Bearer " + token;

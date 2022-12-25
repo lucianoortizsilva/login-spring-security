@@ -110,18 +110,12 @@
 		</dependency>
 		<!-- javax -->
 
-		<!--
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>lucianoortizsilva.poc</groupId>
+			<artifactId>jwt-lib</artifactId>
+			<version>1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		-->
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
