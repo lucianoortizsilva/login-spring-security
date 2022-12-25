@@ -11,7 +11,9 @@ services:
       - .docker/db-mysql:/var/lib/mysql
     environment:
       MYSQL_DATABASE: autorizacao-db
-      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: ortiz
+      MYSQL_PASSWORD: 12345
+      MYSQL_ROOT_PASSWORD: 12345
       MYSQL_ALLOW_EMPTY_PASSWORD: false
       MYSQL_RANDOM_ROOT_PASSWORD: false
     networks:
