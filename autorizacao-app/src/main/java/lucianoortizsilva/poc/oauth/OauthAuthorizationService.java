@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.outh;
+package lucianoortizsilva.poc.oauth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -3,12 +3,12 @@ package lucianoortizsilva.poc.config;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import lucianoortizsilva.poc.business.Livro;
 import lucianoortizsilva.poc.business.LivroRepository;
@@ -17,10 +17,11 @@ import lucianoortizsilva.poc.business.LivroRepository;
 public class LoadDatabaseDefault implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
+	@Qualifier("LivroRepository")
 	private LivroRepository livroRepository;
 
 	@Override
-	@Transactional
+	@Transactional("businessTransactionManager")
 	public void onApplicationEvent(final ContextRefreshedEvent event) {
 		createLivroIfNotFound("978-1-119-61762-4", "Oracle Certified Professional Java SE 11 Programmer II", "Scott Selikoff", LocalDate.of(2020, 01, 01));
 		createLivroIfNotFound("978-85-7608-325-2", "EJB 3 em acao", "Debu Panda", LocalDate.of(2009, 01, 01));
@@ -31,7 +32,6 @@ public class LoadDatabaseDefault implements ApplicationListener<ContextRefreshed
 		createLivroIfNotFound("978-85-7608-294-1", "Use a Cabeça Servlets & JSP", "Bryan Basham", LocalDate.of(2000, 07, 14));
 	}
 
-	@Transactional
 	private void createLivroIfNotFound(final String isbn, final String descricao, final String autor, final LocalDate dtLancamento) {
 		Optional<Livro> livro = livroRepository.findByIsbn(isbn);
 		if (livro.isEmpty()) {

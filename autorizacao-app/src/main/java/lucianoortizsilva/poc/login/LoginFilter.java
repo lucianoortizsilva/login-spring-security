@@ -23,8 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import lombok.extern.slf4j.Slf4j;
 import lucianoortizsilva.poc.error.GeraErroBadRequest;
 import lucianoortizsilva.poc.error.GeraErroNaoAutorizado;
-import lucianoortizsilva.poc.outh.OauthAuthorization;
-import lucianoortizsilva.poc.outh.OauthAuthorizationService;
+import lucianoortizsilva.poc.oauth.OauthAuthorization;
+import lucianoortizsilva.poc.oauth.OauthAuthorizationService;
 import lucianoortizsilva.poc.user.User;
 import lucianoortizsilva.poc.user.UserDTO;
 import lucianoortizsilva.poc.user.UserService;

@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.config;
+package lucianoortizsilva.poc.config.basic;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

@@ -5,19 +5,22 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import lombok.AllArgsConstructor;
-
 //@formatter:off
 @Service
-@AllArgsConstructor
 public class LivroService {
 
+	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	@Qualifier("LivroRepository")
 	private LivroRepository livroRepository;
 	
 	public Page<Livro> findAll(final String descricao, final int page, final int size) {
@@ -28,7 +31,7 @@ public class LivroService {
 		}
 	}
 
-	@Transactional
+	@Transactional("businessTransactionManager")
 	public Livro insert(final Livro entity) {
 		final Optional<Livro> livro = this.livroRepository.findByIsbn(entity.getIsbn());
 		if (livro.isPresent()) {
@@ -38,7 +41,8 @@ public class LivroService {
 		}
 	}
 
-	@Transactional
+	
+	@Transactional("businessTransactionManager")
 	public void delete(final Long id) {
 		final Optional<Livro> livro = this.livroRepository.findById(id);
 		if (livro.isPresent()) {
@@ -56,8 +60,8 @@ public class LivroService {
 			throw new LivroNaoEncontradoException();
 		}
 	}
-
-	@Transactional
+	
+	@Transactional("businessTransactionManager")
 	public void update(final LivroDTO dto) {
 		final Optional<Livro> livro = this.livroRepository.findById(dto.getId());
 		if (livro.isPresent()) {

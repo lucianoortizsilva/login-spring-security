@@ -14,8 +14,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import lucianoortizsilva.poc.core.model.PayloadValue;
-import lucianoortizsilva.poc.outh.OauthAuthorization;
-import lucianoortizsilva.poc.outh.OauthAuthorizationService;
+import lucianoortizsilva.poc.oauth.OauthAuthorization;
+import lucianoortizsilva.poc.oauth.OauthAuthorizationService;
 import lucianoortizsilva.poc.user.token.TokenJwt;
 
 @Service

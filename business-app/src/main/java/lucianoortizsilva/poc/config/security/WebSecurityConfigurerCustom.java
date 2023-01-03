@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.config;
+package lucianoortizsilva.poc.config.security;
 
 import java.util.Arrays;
 
