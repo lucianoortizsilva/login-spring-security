@@ -16,32 +16,40 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+/**
+ * 
+ * https://docs.spring.io/spring-boot/docs/2.1.16.RELEASE/reference/html/howto-data-access.html
+ *
+ */
 @Configuration
 @PropertySource({ "classpath:persistence-multiple-db.properties" })
-@EnableJpaRepositories(basePackages = "lucianoortizsilva.poc.oauth", entityManagerFactoryRef = "oauthEntityManager", transactionManagerRef = "oauthTransactionManager")
-public class RepositoryAutorizacaoConfig {
+@EnableJpaRepositories(basePackages = "lucianoortizsilva.poc.autorizacao", entityManagerFactoryRef = "autorizacaoEntityManager", transactionManagerRef = "autorizacaoTransactionManager")
+public class DataSourceAutorizacaoConfig {
 
 	@Autowired
 	private Environment env;
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean oauthEntityManager() {
+	public LocalContainerEntityManagerFactoryBean autorizacaoEntityManager() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-		em.setDataSource(oauthDataSource());
-		em.setPackagesToScan(new String[] { "lucianoortizsilva.poc.oauth" });
+		em.setDataSource(autorizacaoDataSource());
+		em.setPackagesToScan(new String[] { "lucianoortizsilva.poc.autorizacao" });
 
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
+
 		HashMap<String, Object> properties = new HashMap<>();
 		properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		properties.put("jpa.show-sql", true);
+		
 		em.setJpaPropertyMap(properties);
 
 		return em;
 	}
 
 	@Bean
-	public DataSource oauthDataSource() {
+	public DataSource autorizacaoDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
 		dataSource.setUrl(env.getProperty("jdbc.url.autorizacao"));
@@ -51,9 +59,9 @@ public class RepositoryAutorizacaoConfig {
 	}
 
 	@Bean
-	public PlatformTransactionManager oauthTransactionManager() {
+	public PlatformTransactionManager autorizacaoTransactionManager() {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(oauthEntityManager().getObject());
+		transactionManager.setEntityManagerFactory(autorizacaoEntityManager().getObject());
 		return transactionManager;
 	}
 

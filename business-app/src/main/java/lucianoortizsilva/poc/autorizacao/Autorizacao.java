@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.oauth;
+package lucianoortizsilva.poc.autorizacao;
 
 import java.io.Serializable;
 
@@ -17,8 +17,8 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "AUTORIZACAO", name = "auth_authorization")
-public class OauthAuthorization implements Serializable {
+@Table(schema = "AUTORIZACAO")
+public class Autorizacao implements Serializable {
 
 	private static final long serialVersionUID = -3999514235058392995L;
 

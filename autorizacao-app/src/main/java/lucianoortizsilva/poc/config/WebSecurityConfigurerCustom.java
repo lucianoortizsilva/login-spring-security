@@ -16,8 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import lucianoortizsilva.poc.autorizacao.AutorizacaoService;
 import lucianoortizsilva.poc.login.LoginFilter;
-import lucianoortizsilva.poc.oauth.OauthAuthorizationService;
 import lucianoortizsilva.poc.user.UserService;
 import lucianoortizsilva.poc.user.token.TokenJwt;
 
@@ -40,7 +40,7 @@ public class WebSecurityConfigurerCustom extends WebSecurityConfigurerAdapter {
 	private UserService userService;
 
 	@Autowired
-	private OauthAuthorizationService oauthAuthorizationService;
+	private AutorizacaoService oauthAuthorizationService;
 	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {

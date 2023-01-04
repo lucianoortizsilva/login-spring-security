@@ -21,10 +21,10 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.extern.slf4j.Slf4j;
+import lucianoortizsilva.poc.autorizacao.Autorizacao;
+import lucianoortizsilva.poc.autorizacao.AutorizacaoService;
 import lucianoortizsilva.poc.error.GeraErroBadRequest;
 import lucianoortizsilva.poc.error.GeraErroNaoAutorizado;
-import lucianoortizsilva.poc.oauth.OauthAuthorization;
-import lucianoortizsilva.poc.oauth.OauthAuthorizationService;
 import lucianoortizsilva.poc.user.User;
 import lucianoortizsilva.poc.user.UserDTO;
 import lucianoortizsilva.poc.user.UserService;
@@ -34,14 +34,14 @@ import lucianoortizsilva.poc.util.JsonUtil;
 @Slf4j
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
-	private OauthAuthorizationService oauthAuthorizationService;
+	private AutorizacaoService oauthAuthorizationService;
 	private AuthenticationManager authenticationManager;
 	private TokenJwt tokenJwt;
 	private UserService userService;
 	
 	
 	
-	public LoginFilter(final AuthenticationManager authenticationManager, final UserService userService, final TokenJwt tokenJwt, final OauthAuthorizationService oauthAuthorizationService) {
+	public LoginFilter(final AuthenticationManager authenticationManager, final UserService userService, final TokenJwt tokenJwt, final AutorizacaoService oauthAuthorizationService) {
 		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.oauthAuthorizationService = oauthAuthorizationService;
 		this.authenticationManager = authenticationManager;
@@ -86,7 +86,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 		
 		final String token = this.tokenJwt.gerar(infoToken);
 		final String authorization = "Bearer " + token;
-		this.oauthAuthorizationService.save(new OauthAuthorization(authorization));
+		this.oauthAuthorizationService.save(new Autorizacao(authorization));
 		response.setHeader(HttpHeaders.AUTHORIZATION, authorization);
 		response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.AUTHORIZATION);
 		log.info("Authorization: Bearer {}", token);

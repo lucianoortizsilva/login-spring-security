@@ -13,9 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import lucianoortizsilva.poc.autorizacao.Autorizacao;
+import lucianoortizsilva.poc.autorizacao.AutorizacaoService;
 import lucianoortizsilva.poc.core.model.PayloadValue;
-import lucianoortizsilva.poc.oauth.OauthAuthorization;
-import lucianoortizsilva.poc.oauth.OauthAuthorizationService;
 import lucianoortizsilva.poc.user.token.TokenJwt;
 
 @Service
@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
 	private TokenJwt tokenJwt;
 
 	@Autowired
-	private OauthAuthorizationService oauthAuthorizationService;
+	private AutorizacaoService oauthAuthorizationService;
 
 	
 	
@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
 	
 	
 	public UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(final String authorization) {
-		final Optional<OauthAuthorization> optional = oauthAuthorizationService.findByAuthorization(authorization);
+		final Optional<Autorizacao> optional = oauthAuthorizationService.findByAuthorization(authorization);
 		if (optional.isPresent()) {
 			final PayloadValue payload = (PayloadValue) this.tokenJwt.getPayload(authorization);
 			final List<String> permissions = payload.getAuthorities();

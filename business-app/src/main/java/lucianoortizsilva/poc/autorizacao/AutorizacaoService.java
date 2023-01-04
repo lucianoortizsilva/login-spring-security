@@ -1,4 +1,4 @@
-package lucianoortizsilva.poc.oauth;
+package lucianoortizsilva.poc.autorizacao;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,22 +8,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class OauthAuthorizationService {
+public class AutorizacaoService {
 
 	@Autowired
-	private OauthAuthorizationRepository oauthAuthorizationRepository;
+	private AutorizacaoRepository oauthAuthorizationRepository;
 
-	@Transactional("oauthTransactionManager")
-	public void save(final OauthAuthorization oauthAuthorization) {
+	@Transactional("autorizacaoTransactionManager")
+	public void save(final Autorizacao oauthAuthorization) {
 		this.oauthAuthorizationRepository.saveAndFlush(oauthAuthorization);
 	}
 
-	@Transactional("oauthTransactionManager")
-	public Optional<OauthAuthorization> findByAuthorization(final String oauthAuthorization) {
+	@Transactional("autorizacaoTransactionManager")
+	public Optional<Autorizacao> findByAuthorization(final String oauthAuthorization) {
 		return this.oauthAuthorizationRepository.findByAuthorization(oauthAuthorization);
 	}
 
-	public List<OauthAuthorization> getAll() {
+	public List<Autorizacao> getAll() {
 		return oauthAuthorizationRepository.findAll();
 	}
 

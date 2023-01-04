@@ -16,10 +16,15 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
+/**
+ * 
+ * https://docs.spring.io/spring-boot/docs/2.1.16.RELEASE/reference/html/howto-data-access.html
+ *
+ */
 @Configuration
 @PropertySource({ "classpath:persistence-multiple-db.properties" })
 @EnableJpaRepositories(basePackages = "lucianoortizsilva.poc.business", entityManagerFactoryRef = "businessEntityManager", transactionManagerRef = "businessTransactionManager")
-public class RepositoryBusinessConfig {
+public class DataSourceBusinessConfig {
 
 	@Autowired
 	private Environment env;
@@ -32,9 +37,12 @@ public class RepositoryBusinessConfig {
 
 		HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
+
 		HashMap<String, Object> properties = new HashMap<>();
 		properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 		properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
+		properties.put("jpa.show-sql", true);
+		
 		em.setJpaPropertyMap(properties);
 
 		return em;
