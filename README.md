@@ -6,7 +6,7 @@
 - MySQL
 
 ### O que é ?
-Um exemplo de aplicação que trabalha com autênticação, utilizando spring-security e JWT. \
+Um exemplo de aplicação que trabalha com autênticação, utilizando spring-security e JWT. 
 
 Para isso desenvolvi 2 aplicações em Java e 1 jwt-lib: 
 - autenticacao-app: Uma aplicação responsável por realizar uma autênticação, através de Login/Senha.
