@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("LivroRepository")
+@Repository
 public interface LivroRepository extends PagingAndSortingRepository<Livro, Long> {
 
 	Optional<Livro> findByIsbn(String isbn);
@@ -15,5 +15,5 @@ public interface LivroRepository extends PagingAndSortingRepository<Livro, Long>
 	Page<Livro> findByDescricaoContaining(String descricao, Pageable pageable);
 
 	Page<Livro> findAll(Pageable pageable);
-	
+
 }

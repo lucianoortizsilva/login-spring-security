@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,6 @@ import lucianoortizsilva.poc.business.LivroRepository;
 public class LoadDatabaseDefault implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Autowired
-	@Qualifier("LivroRepository")
 	private LivroRepository livroRepository;
 
 	@Override

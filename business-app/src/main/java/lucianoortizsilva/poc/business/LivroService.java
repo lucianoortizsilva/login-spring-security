@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ public class LivroService {
 	private ModelMapper modelMapper;
 	
 	@Autowired
-	@Qualifier("LivroRepository")
 	private LivroRepository livroRepository;
 	
 	public Page<Livro> findAll(final String descricao, final int page, final int size) {

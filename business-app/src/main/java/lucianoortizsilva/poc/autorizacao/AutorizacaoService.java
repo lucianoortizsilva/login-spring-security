@@ -11,20 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class AutorizacaoService {
 
 	@Autowired
-	private AutorizacaoRepository oauthAuthorizationRepository;
+	private AutorizacaoRepository autorizacaoRepository;
 
 	@Transactional("autorizacaoTransactionManager")
 	public void save(final Autorizacao oauthAuthorization) {
-		this.oauthAuthorizationRepository.saveAndFlush(oauthAuthorization);
+		this.autorizacaoRepository.saveAndFlush(oauthAuthorization);
 	}
 
 	@Transactional("autorizacaoTransactionManager")
 	public Optional<Autorizacao> findByAuthorization(final String oauthAuthorization) {
-		return this.oauthAuthorizationRepository.findByAuthorization(oauthAuthorization);
+		return this.autorizacaoRepository.findByAuthorization(oauthAuthorization);
 	}
 
 	public List<Autorizacao> getAll() {
-		return oauthAuthorizationRepository.findAll();
+		return autorizacaoRepository.findAll();
 	}
 
 }
