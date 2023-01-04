@@ -10,7 +10,7 @@ Um exemplo de aplicação que trabalha com autênticação, utilizando spring-se
 
 Para isso desenvolvi 2 aplicações em Java e 1 jwt-lib: 
 - autenticacao-app: Uma aplicação responsável por realizar uma autênticação, através de Login/Senha.
-- business-app: Uma aplicação responsável por disponibilizar API's de uma biblioteca fake, em que alguns endpoints serão acessadas somente se realizarem autênticação anteriormente.
+- business-app: Uma aplicação responsável por disponibilizar API's de uma biblioteca fake, em que alguns endpoints serão acessados somente se realizarem autênticação anteriormente.
 - jwt-lib: Um jar responsável por fazer encode/decode JWT.
 
 ### Arquitetura
