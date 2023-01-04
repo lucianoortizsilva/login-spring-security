@@ -36,3 +36,23 @@ Para isso desenvolvi 2 aplicações em Java e 1 jwt-lib:
 > 4º Build e Deploy `business-app`:
 - No diretório business-app: **`mvn clean package`**
 - No diretório business-app: **`mvn spring-boot:run`**
+
+<br/><br/>
+
+### Como testar ?
+
+> 1º Realizar login, e copiar o Authorization do retono.
+
+POST `http://localhost:8080/login`
+```json
+{
+  "username" : "luciano@fake.com",
+  "password" : "12345"
+}
+```
+
+<br/>
+
+> 2º Buscando livro por ID. Cole o Authorization no header da solicitação.
+
+GET `http://localhost:8081/livros/3`
