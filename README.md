@@ -9,7 +9,7 @@
 Um exemplo de aplicação que trabalha com autênticação, utilizando spring-security e JWT. 
 
 Para isso desenvolvi 2 aplicações em Java e 1 jwt-lib: 
-- autenticacao-app: Uma aplicação responsável por realizar uma autênticação, através de Login/Senha.
+- autorizacao-app: Uma aplicação responsável por realizar uma autênticação, através de Login/Senha.
 - business-app: Uma aplicação responsável por disponibilizar API's de uma biblioteca fake, em que alguns endpoints serão acessados somente se realizarem autênticação anteriormente.
 - jwt-lib: Um jar responsável por fazer encode/decode JWT.
 
@@ -27,9 +27,9 @@ Para isso desenvolvi 2 aplicações em Java e 1 jwt-lib:
 
 <br/>
 
-> 3º Build e Deploy `autenticacao-app`:
-- No diretório autenticacao-app: **`mvn clean package`**
-- No diretório autenticacao-app: **`mvn spring-boot:run`**
+> 3º Build e Deploy `autorizacao-app`:
+- No diretório autorizacao-app: **`mvn clean package`**
+- No diretório autorizacao-app: **`mvn spring-boot:run`**
 
 <br/>
 
